@@ -9,7 +9,8 @@ from ragas.metrics import LLMContextPrecisionWithoutReference
 # Load environment variables from .env file
 load_dotenv()
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
+# The next line is not needed as the variable is already loaded in the environment.
+# openai_api_key = os.getenv("OPENAI_API_KEY")
 
 # user input in ragas = query
 # response in ragas = response
@@ -39,3 +40,6 @@ async def test_context_precision():
   # Score
   score = await context_precision.single_turn_ascore(sample)
   print(f"Context Precision Score: {score}")
+
+  # Example assertion
+  assert score > 0.8
