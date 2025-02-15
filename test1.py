@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
+import pytest
 from ragas import SingleTurnSample
 from ragas.llms import LangchainLLMWrapper
 from ragas.metrics import LLMContextPrecisionWithoutReference
@@ -15,7 +16,9 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 # reference in ragas = ground truth (expected results)
 # retrieved_context in ragas = Top k retrieved documents
 
-def test_context_precision():
+
+@pytest.mark.asyncio
+async def test_context_precision():
   # Create instance of class for specific metric
   # Power of LLM + method metric => score
   llm = ChatOpenAI(model='gpt-4', temperature=0)
@@ -23,11 +26,15 @@ def test_context_precision():
   context_precision = LLMContextPrecisionWithoutReference(llm=langchain_llm)
 
   # Feed data
-  SingleTurnSample(
-    user_input="How many articles are there in the Selenium webdriver python course",
-    response="There are 23 articles in the course.",
-    retrieved_contexts=[]
+  sample = SingleTurnSample(
+    user_input="How many articles are there in the Selenium webdriver python course?",
+    response="There are 23 articles in the Selenium WebDriver Python course. \n",
+    retrieved_contexts=[
+      "Complete Understanding on Selenium Python API Methods with real time Scenarios on LIVE Websites\n\"Last but not least\" you can clear any Interview and can Lead Entire Selenium Python Projects from Design Stage\nThis course includes:\n17.5 hours on-demand video\nAssignments\n23 articles\n9 downloadable resources\nAccess on mobile and TV\nCertificate of completion\nRequirements"
+    ]
 
   )
 
   # Score
+  score = await context_precision.single_turn_ascore(sample)
+  print(f"Context Precision Score: {score}")
