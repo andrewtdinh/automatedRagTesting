@@ -9,9 +9,6 @@ from ragas.metrics import LLMContextPrecisionWithoutReference
 # Load environment variables from .env file
 load_dotenv()
 
-# The next line is not needed as the variable is already loaded in the environment.
-# openai_api_key = os.getenv("OPENAI_API_KEY")
-
 # user input in ragas = query
 # response in ragas = response
 # reference in ragas = ground truth (expected results)
