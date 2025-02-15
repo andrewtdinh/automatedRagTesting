@@ -1,8 +1,14 @@
 import os
+from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from ragas import SingleTurnSample
-from ragas.metrics import LLMContextPrecisionWithoutReference
 from ragas.llms import LangchainLLMWrapper
+from ragas.metrics import LLMContextPrecisionWithoutReference
+
+# Load environment variables from .env file
+load_dotenv()
+
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 # user input in ragas = query
 # response in ragas = response
@@ -11,7 +17,6 @@ from ragas.llms import LangchainLLMWrapper
 
 def test_context_precision():
   # Create instance of class for specific metric
-  os.environ["OPENAI_API_KEY"] = "key_here"
   # Power of LLM + method metric => score
   llm = ChatOpenAI(model='gpt-4', temperature=0)
   langchain_llm = LangchainLLMWrapper(llm)
