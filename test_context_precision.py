@@ -1,4 +1,3 @@
-import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 import pytest
@@ -7,9 +6,11 @@ from ragas.llms import LangchainLLMWrapper
 from ragas.metrics import LLMContextPrecisionWithoutReference
 import requests
 
-# Load environment variables from .env file
+# Load environment variables from .env file so that the OPENAI_API_KEY and other env variables are
+# available on the environment.
 load_dotenv()
 
+# Terms and definitions
 # user input in ragas = query
 # response in ragas = response
 # reference in ragas = ground truth (expected results)
