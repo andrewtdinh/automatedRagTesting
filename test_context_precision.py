@@ -18,12 +18,10 @@ load_dotenv()
 
 
 @pytest.mark.asyncio
-async def test_context_precision():
+async def test_context_precision(llm_wrapper):
   # Create instance of class for specific metric
   # Power of LLM + method metric => score
-  llm = ChatOpenAI(model='gpt-4', temperature=0)
-  langchain_llm = LangchainLLMWrapper(llm)
-  context_precision = LLMContextPrecisionWithoutReference(llm=langchain_llm)
+  context_precision = LLMContextPrecisionWithoutReference(llm=llm_wrapper)
   question = "How many articles are there in the Selenium webdriver python course?"
   response_dict = requests.post('https://rahulshettyacademy.com/rag-llm/ask',
                                 json={
