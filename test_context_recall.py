@@ -23,12 +23,6 @@ async def test_context_recall(llm_wrapper, get_data):
     print(f"\nContext Recall Score: {score}")
     assert score > 0.7
 
-@pytest.fixture
-def llm_wrapper():
-    llm = ChatOpenAI(model="gpt-4", temperature=0)
-    langchain_llm = LangchainLLMWrapper(llm)
-
-    return langchain_llm
 
 @pytest.fixture
 def get_data(request):

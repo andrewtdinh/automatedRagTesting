@@ -1,20 +1,11 @@
 import pytest
-import requests
-from ragas import SingleTurnSample
+from langchain_openai import ChatOpenAI
+from ragas.llms import LangchainLLMWrapper
+
 
 @pytest.fixture
-def get_data():
-    question = "How many articles are there in the Selenium webdriver python course?"
-    response_dict = requests.post('https://rahulshettyacademy.com/rag-llm/ask',
-                                  json={
-                                      "question": question,
-                                      "chat_history": []
-                                  }).json()
+def llm_wrapper():
+    llm = ChatOpenAI(model="gpt-4", temperature=0)
+    langchain_llm = LangchainLLMWrapper(llm)
 
-    sample = SingleTurnSample(
-        user_input=question,
-        retrieved_contexts=[retrieved_context['page_content'] for retrieved_context in response_dict['retrieved_docs']],
-        reference="23"
-    )
-
-    return sample
+    return langchain_llm
