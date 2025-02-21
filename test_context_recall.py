@@ -1,9 +1,7 @@
 import pytest
 import requests
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 from ragas import SingleTurnSample
-from ragas.llms import LangchainLLMWrapper
 from ragas.metrics import LLMContextRecall
 
 load_dotenv()
