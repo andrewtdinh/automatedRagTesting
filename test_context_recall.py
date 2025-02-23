@@ -1,8 +1,9 @@
 import pytest
-import requests
 from dotenv import load_dotenv
 from ragas import SingleTurnSample
 from ragas.metrics import LLMContextRecall
+
+from utils import get_llm_response
 
 load_dotenv()
 
@@ -25,11 +26,7 @@ async def test_context_recall(llm_wrapper, get_data):
 @pytest.fixture
 def get_data(request):
     test_data = request.param
-    response_dict = requests.post('https://rahulshettyacademy.com/rag-llm/ask',
-                                  json={
-                                      "question": test_data['question'],
-                                      "chat_history": []
-                                  }).json()
+    response_dict = get_llm_response(test_data)
 
     sample = SingleTurnSample(
         user_input=test_data['question'],
