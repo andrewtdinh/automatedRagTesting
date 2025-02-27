@@ -1,15 +1,17 @@
 import pytest
+from dotenv import load_dotenv
 from ragas import SingleTurnSample
 from ragas.metrics import Faithfulness
 
 from utils import load_test_data, get_llm_response
 
+load_dotenv()
 
-@pytest.mark.parametrize("get_data", load_test_data(), indirect=True)
+@pytest.mark.parametrize("get_data", load_test_data('faithfulness_test_data.json'), indirect=True)
 @pytest.mark.asyncio
 async def test_faithfulness(llm_wrapper, get_data):
     faithful = Faithfulness(llm=llm_wrapper)
-    score = faithful.single_turn_ascore(get_data)
+    score = await faithful.single_turn_ascore(get_data)
     print(f"Faithful score: {score}")
     assert score > 0.8
 

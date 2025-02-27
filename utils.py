@@ -1,9 +1,11 @@
 import json
+from pathlib import Path
 
 import requests
 
-def load_test_data():
-    test_data_path = "/Users/anhbamuoi/Code/automatedRagTesting/testdata/context_recall_framework.json"
+def load_test_data(filename):
+    project_dir = Path(__file__).parent.absolute()
+    test_data_path = f"{project_dir}/testdata/{filename}"
     with open(test_data_path) as f:
         return json.load(f)
 

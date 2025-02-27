@@ -8,7 +8,7 @@ from utils import get_llm_response, load_test_data
 load_dotenv()
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize('get_data', load_test_data(), indirect=True)
+@pytest.mark.parametrize('get_data', load_test_data('context_recall_framework.json'), indirect=True)
 async def test_context_recall(llm_wrapper, get_data):
     context_recall =  LLMContextRecall(llm=llm_wrapper)
     score = await context_recall.single_turn_ascore(get_data)
