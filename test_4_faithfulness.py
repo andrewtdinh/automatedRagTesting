@@ -23,8 +23,7 @@ def get_data(request):
     sample = SingleTurnSample(
         user_input=test_data['question'],
         response=response_dict['answer'],
-        retrieved_contexts=[response_dict["retrieved_docs"][0]['page_content']]
-        # retrieved_contexts=[retrieved_context['page_content'] for retrieved_context in response_dict['retrieved_docs']],
+        retrieved_contexts=[retrieved_context['page_content'] for retrieved_context in response_dict['retrieved_docs']],
     )
 
     return sample
